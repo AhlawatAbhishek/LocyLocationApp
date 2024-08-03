@@ -36,6 +36,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 @Composable
 fun MyApp(modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -63,13 +64,32 @@ fun LocationDisplay(modifier: Modifier = Modifier, locationUtils: LocationUtils,
                         Manifest.permission.ACCESS_COARSE_LOCATION
                     )
                     if (rationaleRequired) {
-                        Toast.makeText(
+                        if (permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ==  true)
+                            Toast.makeText(
+                                context,
+                                "The app will work better on fine app location permission",
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                        else Toast.makeText(
                             context,
-                            "Location Permission Denied. Please allow the permission from the app settings.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                            "Location Permission Denied. \nPlease allow from Android settings.",
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
                     } else {
-                        Toast.makeText(context, "The app will work better on fine app location permission", Toast.LENGTH_SHORT)
+                        if (permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ==  true)
+                            Toast.makeText(
+                                context,
+                                "The app will work better on fine app location permission",
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                        else Toast.makeText(
+                            context,
+                            "Location Permission Denied. \nPlease allow from Android settings.",
+                            Toast.LENGTH_LONG
+                        )
                             .show()
                     }
                 }

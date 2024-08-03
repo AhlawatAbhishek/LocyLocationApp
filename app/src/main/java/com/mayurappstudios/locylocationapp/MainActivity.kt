@@ -86,7 +86,8 @@ fun LocationDisplay(modifier: Modifier = Modifier, locationUtils: LocationUtils,
                 //Request location permission
                 requestPermissionLauncher.launch(
                     arrayOf(
-                        Manifest.permission.ACCESS_FINE_LOCATION
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
                     )
                 )
             }

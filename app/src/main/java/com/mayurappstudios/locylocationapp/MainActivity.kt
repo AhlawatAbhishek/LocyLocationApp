@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mayurappstudios.locylocationapp.ui.theme.LocyLocationAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,9 +29,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val viewModel : LocationViewModel = viewModel()
             LocyLocationAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MyApp(modifier = Modifier.padding(innerPadding))
+                    MyApp(modifier = Modifier.padding(innerPadding), viewModel)
                 }
             }
         }
@@ -38,14 +40,14 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyApp(modifier: Modifier = Modifier) {
+fun MyApp(modifier: Modifier = Modifier, viewModel: LocationViewModel) {
     val context = LocalContext.current
     val locationUtils = LocationUtils(context)
-    LocationDisplay(modifier, locationUtils, context)
+    LocationDisplay(modifier, locationUtils, context, viewModel)
 }
 
 @Composable
-fun LocationDisplay(modifier: Modifier = Modifier, locationUtils: LocationUtils, context: Context) {
+fun LocationDisplay(modifier: Modifier = Modifier, locationUtils: LocationUtils, context: Context, viewModel: LocationViewModel = LocationViewModel()) {
     val requestPermissionLauncher =
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.RequestMultiplePermissions(),

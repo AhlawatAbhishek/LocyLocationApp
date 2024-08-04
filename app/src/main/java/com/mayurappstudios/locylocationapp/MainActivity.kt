@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val viewModel : LocationViewModel = viewModel()
+            val viewModel: LocationViewModel = viewModel()
             LocyLocationAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     MyApp(modifier = Modifier.padding(innerPadding), viewModel)
@@ -47,7 +47,13 @@ fun MyApp(modifier: Modifier = Modifier, viewModel: LocationViewModel) {
 }
 
 @Composable
-fun LocationDisplay(modifier: Modifier = Modifier, locationUtils: LocationUtils, context: Context, viewModel: LocationViewModel = LocationViewModel()) {
+fun LocationDisplay(
+    modifier: Modifier = Modifier,
+    locationUtils: LocationUtils,
+    context: Context,
+    viewModel: LocationViewModel = LocationViewModel()
+) {
+    val location = viewModel.location.value
     val requestPermissionLauncher =
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.RequestMultiplePermissions(),
@@ -56,6 +62,7 @@ fun LocationDisplay(modifier: Modifier = Modifier, locationUtils: LocationUtils,
                     //Permission granted, update the location
                     Toast.makeText(context, "Fine Location permission Granted", Toast.LENGTH_SHORT)
                         .show()
+                    locationUtils.requestLocationUpdates(viewModel)
                 } else {
                     //Permission denied
                     val rationaleRequired = shouldShowRequestPermissionRationale(
@@ -66,7 +73,7 @@ fun LocationDisplay(modifier: Modifier = Modifier, locationUtils: LocationUtils,
                         Manifest.permission.ACCESS_COARSE_LOCATION
                     )
                     if (rationaleRequired) {
-                        if (permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ==  true)
+                        if (permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true)
                             Toast.makeText(
                                 context,
                                 "The app will work better on fine app location permission",
@@ -80,7 +87,7 @@ fun LocationDisplay(modifier: Modifier = Modifier, locationUtils: LocationUtils,
                         )
                             .show()
                     } else {
-                        if (permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ==  true)
+                        if (permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true)
                             Toast.makeText(
                                 context,
                                 "The app will work better on fine app location permission",
@@ -100,10 +107,14 @@ fun LocationDisplay(modifier: Modifier = Modifier, locationUtils: LocationUtils,
         modifier = modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Location not available")
+        location?.let {
+            Text("Latitude: ${it.latitude}")
+            Text("Longitude: ${it.longitude}")
+        } ?: Text("Location not available")
         Button(onClick = {
             if (locationUtils.hasLocationPermission(context)) {
                 //Permission already granted, update the location
+                locationUtils.requestLocationUpdates(viewModel)
             } else {
                 //Request location permission
                 requestPermissionLauncher.launch(

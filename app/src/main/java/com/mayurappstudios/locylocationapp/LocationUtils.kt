@@ -28,6 +28,8 @@ class LocationUtils(val context: Context) {
                 locationResult.lastLocation?.let {
                     val locationData = LocationData(it.latitude, it.longitude)
                     viewModel.updateLocation(locationData)
+                    val address = reverseGeocodeLocation(locationData)
+                    viewModel.updateAddress(address)
                 }
             }
         }

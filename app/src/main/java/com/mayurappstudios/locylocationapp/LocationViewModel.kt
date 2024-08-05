@@ -10,5 +10,8 @@ class LocationViewModel : ViewModel(){
     fun updateLocation(newLocation: LocationData){
         _location.value = newLocation
     }
+    fun updateAddress(newAddress: String){
+        _location.value = _location.value?.copy(address = newAddress)
+    }
 
 }

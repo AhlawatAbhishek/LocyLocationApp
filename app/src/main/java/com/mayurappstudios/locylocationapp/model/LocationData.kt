@@ -1,4 +1,4 @@
-package com.mayurappstudios.locylocationapp
+package com.mayurappstudios.locylocationapp.model
 
 data class LocationData(
     val latitude: Double = 0.0,

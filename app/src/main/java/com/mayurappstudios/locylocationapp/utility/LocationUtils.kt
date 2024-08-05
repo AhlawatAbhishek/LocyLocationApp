@@ -1,4 +1,4 @@
-package com.mayurappstudios.locylocationapp
+package com.mayurappstudios.locylocationapp.utility
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -15,6 +15,8 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.model.LatLng
+import com.mayurappstudios.locylocationapp.model.LocationData
+import com.mayurappstudios.locylocationapp.viewmodel.LocationViewModel
 import java.util.Locale
 
 class LocationUtils(val context: Context) {

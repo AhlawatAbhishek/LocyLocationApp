@@ -1,4 +1,4 @@
-package com.mayurappstudios.locylocationapp
+package com.mayurappstudios.locylocationapp.view
 
 import android.Manifest
 import android.content.Context
@@ -24,6 +24,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mayurappstudios.locylocationapp.ui.theme.LocyLocationAppTheme
+import com.mayurappstudios.locylocationapp.utility.LocationUtils
+import com.mayurappstudios.locylocationapp.viewmodel.LocationViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

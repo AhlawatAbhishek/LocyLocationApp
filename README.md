@@ -1,0 +1,1 @@
+LocyLocationApp: An Android app made using MVVM architecture 📐, Jetpack Compose 🖌️, Google Play Services 🌐, Fused Location Provider 📍, and Geocoding 🌍 for real-time location updates and address retrieval. Built with Kotlin. 🚀

@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mayurappstudios.locylocationapp.ui.theme.LocyLocationAppTheme
@@ -54,6 +55,7 @@ fun LocationDisplay(
     viewModel: LocationViewModel = LocationViewModel()
 ) {
     val location = viewModel.location.value
+    val address = location?.let { locationUtils.reverseGeocodeLocation(it) }
     val requestPermissionLauncher =
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.RequestMultiplePermissions(),
@@ -108,8 +110,7 @@ fun LocationDisplay(
         verticalArrangement = Arrangement.Center
     ) {
         location?.let {
-            Text("Latitude: ${it.latitude}")
-            Text("Longitude: ${it.longitude}")
+            Text("Latitude: ${it.latitude} Longitude: ${it.longitude} \n Address: $address", textAlign = TextAlign.Center)
         } ?: Text("Location not available")
         Button(onClick = {
             if (locationUtils.hasLocationPermission(context)) {
